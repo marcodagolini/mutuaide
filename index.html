@@ -1,0 +1,1314 @@
+<html>
+   <head>
+     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+     <meta charset="utf-8">
+     <title>Structured Contents</title>
+     
+	   
+     <style>
+       /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+       body {
+           background-color:#f0f0f0;
+           margin:0px auto;
+           padding:0px;
+           font-family:helvetica;
+       }
+	.applebutton {
+    background-color: #f68a1f;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 4px;
+    cursor: pointer;
+	  border-radius: 4px;
+	  -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+	  font-family: "Myriad pro","Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",sans-serif;
+}
+.applebutton:hover {
+    background-color: #da7009;
+    color: white;	
+}
+        
+       h1 {
+           text-align:relative;
+           font-weight: 200;
+           font-size:35px;
+           margin-top:20px;
+           margin-left:10px;
+           color:#1e90ff;
+       }
+        
+        
+       #map {
+          height: 280px;
+          width: 330px;
+          margin: 0px;
+          padding: 0px
+       }
+       #description {
+         font-family: Roboto;
+         font-size: 15px;
+         font-weight: 300;
+       }
+ 
+       #infowindow-content .title {
+         font-weight: bold;
+       }
+ 
+       #infowindow-content {
+         display: none;
+       }
+ 
+       #map #infowindow-content {
+         display: inline;
+       }
+ 
+       .pac-card {
+         margin: 10px 10px 0 0;
+         border-radius: 2px 0 0 2px;
+         box-sizing: border-box;
+         -moz-box-sizing: border-box;
+         outline: none;
+         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+         background-color: #fff;
+         font-family: Roboto;
+       }
+ 
+       #pac-container {
+         padding-bottom: 12px;
+         margin-right: 12px;
+       }
+ 
+       .pac-controls {
+         display: inline-block;
+         padding: 5px 11px;
+       }
+ 
+       .pac-controls label {
+         font-family: Roboto;
+         font-size: 13px;
+         font-weight: 300;
+       }
+ 
+       #pac-input {
+         background-color: #fff;
+         font-family: Roboto;
+         font-size: 22px;
+         font-weight: 300;
+         margin-left: 5px;
+         margin-top: 10px;
+         padding: 0 11px 0 13px;
+         text-overflow: ellipsis;
+         width: 210px;
+       }
+ 
+       #pac-input:focus {
+         border-color: #4d90fe;
+       }
+ 
+       #title {
+         color: #fff;
+         background-color: #4d90fe;
+         font-size: 25px;
+         font-weight: 500;
+         padding: 6px 12px;
+       }
+        
+       #target {
+         width: 345px;
+       }
+        
+       div.tab {
+         overflow: hidden;
+         border: 1px solid #ccc;
+         background-color: #f1f1f1;
+       }
+ 
+ /* Style the buttons inside the tab */
+       div.tab button {
+           background-color: inherit;
+           float: left;
+           border: none;
+           outline: none;
+           cursor: pointer;
+           padding: 14px 16px;
+           transition: 0.3s;
+           font-size: 17px;
+       }
+ 
+ /* Change background color of buttons on hover */
+       div.tab button:hover {
+           background-color: #ddd;
+       }
+ 
+ /* Create an active/current tablink class */
+       div.tab button.active {
+          background-color: #0086ff;
+       }
+ 
+ /* Style the tab content */
+       .tabcontent {
+          display: none;
+          padding: 0px;
+          height: 500px;
+          width: 320px;
+          border-top: none;
+       }
+        
+        .generate {
+           padding: 10px;
+           border-radius: 0px 0px 5px 5px;
+           font-weight: 200;
+           position: relative;
+           background-color:#ccc;
+           cursor: pointer;
+         }
+     </style>
+     
+     
+     
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+     <script src="https://lpcdn.lpsnmedia.net/webagent/client-SDK.min.js"></script>
+ 	  
+     
+ 	  
+     <script>
+	     
+	     $("document").ready(function() {
+		     setTimeout(function() {
+			     var mybutton = document.getElementById("buttonMap");
+			     mybutton.className += " active";
+			     $(".tabMap").trigger('click');
+		     },10);
+	     });
+	     function openContent(evt, contentType) {
+		     var i, tabcontent, tablinks;
+		     tabcontent = document.getElementsByClassName("tabcontent");
+		     for (i = 0; i < tabcontent.length; i++) {
+			   tabcontent[i].style.display = "none";
+		     }
+		     tablinks = document.getElementsByClassName("tablinks");
+		     for (i = 0; i < tablinks.length; i++) {
+			     tablinks[i].className = tablinks[i].className.replace(" active", "");
+		     }
+		     document.getElementById(contentType).style.display = "block";
+		     evt.target.className += " active";
+	     }
+ 	   
+    </script>
+	   
+    <script>
+	    
+            
+            $(document).ready(function() {
+              
+                var SDK=lpTag.agentSDK;
+                SDK.init();
+              
+                var onSuccess = function(data) {
+                    // Do something with the returning data
+			if(data.includes("apple")){
+				$('#genericSC').css('display', 'none');
+				$('#facebookSC').css('display', 'none');
+		  		$('#appleSC').css('display', 'inline');
+			}
+			else if(data.includes("book")){
+				$('#genericSC').css('display', 'none');
+				$('#facebookSC').css('display', 'inline');
+		  		$('#appleSC').css('display', 'none');
+			}
+			else{
+				$('#genericSC').css('display', 'inline');
+				$('#facebookSC').css('display', 'none');
+		  		$('#appleSC').css('display', 'none');
+			}
+		  
+                };
+                
+                var onError = function(data) {
+		    $('#genericSC').css('display', 'inline');
+		    $('#facebookSC').css('display', 'none');
+		    $('#appleSC').css('display', 'none');
+                  console.log("Error");
+                    // Do something with the returning data
+                };
+                
+             
+                SDK.get('authenticatedData.customerDetails.customerId', onSuccess, onError);               
+              
+            });
+  
+        
+        </script>
+     
+        <script>
+		var InterceptedLat = "";
+		var InterceptedLong = "";
+		lpTag.agentSDK.init({});
+		function sendSC(json) {
+			var cmdName = lpTag.agentSDK.cmdNames.writeSC;
+			var data = {json:json};
+			lpTag.agentSDK.command(cmdName, data, function (err) {
+				outputLog.value = err ? err : 'done';
+			});
+		}
+		
+		function example1FB() {
+			var listPickerSC = {
+				"type": "vertical",
+				"tag": "generic",
+				"elements": [
+					{
+						"type": "vertical",
+						"elements": [
+							{
+								"type": "image",
+								"url": "https://i.imgur.com/myfcowk.png",
+								"tooltip": "Flowers"
+							},
+							{
+								"type": "text",
+								"tag": "title",
+								"text": "Birthday Trip",
+								"tooltip": "Title"
+							},
+							{
+								"type": "text",
+								"tag": "subtitle",
+								"text": "Your Trip",
+								"tooltip": "subtitle"
+							},
+							{
+								"type": "button",
+								"tooltip": "publish text example",
+								"title": "publish text example",
+								"click": {
+									"actions": [
+										{
+											"type": "publishText",
+											"text": "published text button tap"
+										}
+									]
+								}
+							},
+							{
+								"type": "button",
+								"tooltip": "URL button example",
+								"title": "URL button example",
+								"click": {
+									"actions": [
+										{
+											"type": "link",
+											"name": "URL button tap",
+											"uri": "https://marcodagolini.github.io/webmessaging1/"
+										}
+									]
+								}
+							},
+							{
+								"type": "button",
+								"title": "Navigate",
+								"click": {
+									"actions": [
+										{
+											"type": "navigate",
+											"lo": 40.7562,
+											"la": -73.99861
+										}
+									]
+								}
+							}
+						]
+					}
+				]
+			};
+			
+			var cmdName = lpTag.agentSDK.cmdNames.writeSC;
+			var payload = {
+				json: listPickerSC
+			};
+			lpTag.agentSDK.command(cmdName, payload, function (err) {
+				outputLog.value = err ? err : 'done';
+			});
+		}
+				
+			
+											
+		  
+		/*****************************  
+		
+        var listPickerSCMetadata = [{
+  "type": "BusinessChatCustomMessage",
+  "appId": 1234,
+  "appName": "AuthenticationPOC",
+  "bid": "com.apple.messages.MSMessageExtensionBalloonPlugin:7A76CR8BD8:com.liveperson.abcpoc.welcomMessagePOC.WelcomMessagePOC.welcomMessagePOCExtension",
+  "sessionIdentifier": "",
+  "useLiveLayout": true,
+  "receivedMessage": {
+"imageURL":"https://i.imgur.com/6Ne2kqO.jpg",
+      "title": "VIU Hotel",
+      "style": "icon",
+      "subtitle": "hotelVIUmilan",
+      "secondarySubtitle": "",
+      "tertiarySubtitle": "",
+      "imageTitle": "",
+      "imageSubtitle": ""
+  },
+  "URL": "http://www.hotelviumilan.com/"
+}];
+    
+    **********************/
+         
+	     
+	     
+	     function restaurantappleSC() {
+		  
+		  
+        var listPickerSC = {
+		 "type": "vertical",
+            	 "elements": [{
+ 			               "type": "vertical",
+ 			               "elements": [{
+ 				               "type": "image",
+ 				               "url": "https://i.imgur.com/6Ne2kqO.jpg",
+ 				               "tooltip": "image tooltip"
+ 			               },
+ 			               {
+ 				               "type": "text",
+ 				               "text": "VIU Hotel",
+ 				               "tooltip": "hotelVIUmilan",
+ 				               "style": {
+ 					               "bold": true,
+ 					               "size": "large",
+						       "color": "#000000"
+ 				               }
+ 			               },
+ 			               {
+ 				               "type": "button",
+ 				               "title": "VIU Hotel",
+ 				               "click": {
+ 					               "actions": [{
+ 						               "type": "link",
+ 						               "uri": "http://www.hotelviumilan.com/"
+ 					               }]
+ 				               }
+ 			               }
+						    
+ 		               ]}]};
+		  
+		  
+        var listPickerSCMetadata = [{
+  "type": "BusinessChatCustomMessage",
+  "appId": 1234,
+  "appName": "AuthenticationPOC",
+  "bid": "com.apple.messages.MSMessageExtensionBalloonPlugin:7A76CR8BD8:com.liveperson.abcpoc.welcomMessagePOC.WelcomMessagePOC.welcomMessagePOCExtension",
+  "sessionIdentifier": "",
+  "useLiveLayout": true,
+  "receivedMessage": {
+"imageURL":"https://i.imgur.com/6Ne2kqO.jpg",
+      "title": "VIU Hotel",
+      "style": "icon",
+      "subtitle": "hotelVIUmilan",
+      "secondarySubtitle": "",
+      "tertiarySubtitle": "",
+      "imageTitle": "",
+      "imageSubtitle": ""
+  },
+  "URL": "http://www.hotelviumilan.com/"
+}];
+    
+    
+            var cmdName = lpTag.agentSDK.cmdNames.writeSC;
+            var payload = {
+json: listPickerSC,
+metadata: listPickerSCMetadata
+};
+            lpTag.agentSDK.command(cmdName, payload, function (err) {
+               outputLog.value = err ? err : 'done';
+            });
+         }
+	     
+	     
+	  function example2FB() {
+		  
+		  
+        var listPickerSC = {
+  "type": "vertical",
+  "tag": "button",
+  "elements": [
+    {
+      "type": "vertical",
+      "elements": [
+        {
+          "type": "text",
+          "tag": "title",
+          "text": "Button example template",
+          "tooltip": "Button example template"
+        },
+        {
+          "type": "button",
+          "tooltip": "Publish text example",
+          "title": "Publish text example",
+          "click": {
+            "actions": [
+              {
+                "type": "publishText",
+                "text": "published text button tap"
+              }
+            ]
+          }
+        },
+        {
+          "type": "button",
+          "tooltip": "URL button example",
+          "title": "URL button example",
+          "click": {
+            "actions": [
+              {
+                "type": "link",
+                "name": "URL button tap",
+                "uri": "https://marcodagolini.github.io/webmessaging1/"
+              }
+            ]
+          }
+        },
+        {
+          "type": "button",
+          "title": "Navigate",
+          "click": {
+               "actions": [
+              {
+                "type": "navigate",
+                "lo": 40.7562,
+                "la": -73.99861
+              }
+            ]
+          }
+        }
+      ]
+    }]};
+		  
+	/**********	  
+        var listPickerSCMetadata = [{
+  "type": "BusinessChatCustomMessage",
+  "appId": 1234,
+  "appName": "AuthenticationPOC",
+  "bid": "com.apple.messages.MSMessageExtensionBalloonPlugin:7A76CR8BD8:com.liveperson.abcpoc.welcomMessagePOC.WelcomMessagePOC.welcomMessagePOCExtension",
+  "sessionIdentifier": "",
+  "useLiveLayout": true,
+  "receivedMessage": {
+"imageURL":"https://i.imgur.com/6Ne2kqO.jpg",
+      "title": "VIU Hotel",
+      "style": "icon",
+      "subtitle": "hotelVIUmilan",
+      "secondarySubtitle": "",
+      "tertiarySubtitle": "",
+      "imageTitle": "",
+      "imageSubtitle": ""
+  },
+  "URL": "http://www.hotelviumilan.com/"
+}];
+    
+    **********/
+            var cmdName = lpTag.agentSDK.cmdNames.writeSC;
+            var payload = {
+json: listPickerSC
+};
+            lpTag.agentSDK.command(cmdName, payload, function (err) {
+               outputLog.value = err ? err : 'done';
+            });
+         }
+	     
+	     
+	     
+	     	  function example3FB() {
+		  
+		  
+        var listPickerSC = {
+  "type": "vertical",
+  "tag": "list",
+  "elements": [
+    {
+      "type": "vertical",
+      "elements": [
+        {
+          "type": "text",
+          "text": "Your Trips",
+          "tooltip": "text tooltip",
+          "style": {
+            "bold": true,
+            "size": "large"
+          }
+        },
+        {
+          "type": "horizontal",
+          "elements": [
+            {
+              "type": "image",
+              "url": "https://i.imgur.com/myfcowk.png",
+              "tooltip": "Your Trip"
+            },
+            {
+              "type": "vertical",
+              "elements": [
+                {
+                  "type": "text",
+                  "tag": "title",
+                  "text": "Your Trip",
+                  "tooltip": "Title",
+                  "style": {
+                    "bold": true,
+                    "size": "large"
+                  }
+                },
+                {
+                  "type": "text",
+                  "tag": "subtitle",
+                  "text": "Premium Package",
+                  "tooltip": "Black"
+                },
+                {
+                  "type": "button",
+                  "tooltip": "Add to cart",
+                  "title": "Add to cart",
+                  "click": {
+                    "actions": [
+                      {
+                        "type": "publishText",
+                        "text": "Premium Package added"
+                      }
+                    ],
+                    "metadata": [
+                      {
+                        "type": "ExternalId",
+                        "id": "SpringID"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "horizontal",
+          "elements": [
+            {
+              "type": "image",
+              "url": "https://i.imgur.com/myfcowk.png",
+              "tooltip": "Your Trip"
+            },
+            {
+              "type": "vertical",
+              "elements": [
+                {
+                  "type": "text",
+                  "tag": "title",
+                  "text": "VIP Package",
+                  "tooltip": "VIP Package",
+                  "style": {
+                    "bold": true,
+                    "size": "large"
+                  }
+                },
+                {
+                  "type": "text",
+                  "tag": "subtitle",
+                  "text": "VIP Package",
+                  "tooltip": "VIP Package"
+                },
+                {
+                  "type": "button",
+                  "tooltip": "Add to cart",
+                  "title": "Add to cart",
+                  "click": {
+                    "actions": [
+                      {
+                        "type": "link",
+                        "name": "VIP Package added",
+                        "uri" : "https://marcodagolini.github.io/webmessaging1/"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+		  
+	/**********	  
+        var listPickerSCMetadata = [{
+  "type": "BusinessChatCustomMessage",
+  "appId": 1234,
+  "appName": "AuthenticationPOC",
+  "bid": "com.apple.messages.MSMessageExtensionBalloonPlugin:7A76CR8BD8:com.liveperson.abcpoc.welcomMessagePOC.WelcomMessagePOC.welcomMessagePOCExtension",
+  "sessionIdentifier": "",
+  "useLiveLayout": true,
+  "receivedMessage": {
+"imageURL":"https://i.imgur.com/6Ne2kqO.jpg",
+      "title": "VIU Hotel",
+      "style": "icon",
+      "subtitle": "hotelVIUmilan",
+      "secondarySubtitle": "",
+      "tertiarySubtitle": "",
+      "imageTitle": "",
+      "imageSubtitle": ""
+  },
+  "URL": "http://www.hotelviumilan.com/"
+}];
+    
+    **********/
+            var cmdName = lpTag.agentSDK.cmdNames.writeSC;
+            var payload = {
+json: listPickerSC
+};
+            lpTag.agentSDK.command(cmdName, payload, function (err) {
+               outputLog.value = err ? err : 'done';
+            });
+         }
+	     
+	     
+	     
+	     	  function accountnumberappleSC() {
+		  
+		  
+        var listPickerSC = {
+  "type": "vertical",
+  "tag": "datePicker",
+  "elements": [
+    {
+      "type": "text",
+      "text": "Scegli una data",
+      "tag": "Title",
+      "style": {
+        "bold": true,
+        "size": "large"
+      }
+    },
+    {
+      "type": "text",
+      "text": "Giovedi 7 Giugno"
+    },
+    {
+      "type": "horizontal",
+      "elements": [
+        {
+          "type": "button",
+          "title": "20:30",
+          "click": {
+            "metadata": [
+              {
+                "type": "ExternalId",
+                "id": "SlotIdentidier"
+              },
+              {
+                "type": "BusinessEvent",
+                "timing": {
+                  "startTime": "2018-06-07T18:30:00Z",
+                  "duration": 3600
+                }
+              }
+            ],
+            "actions": [
+              {
+                "type": "publishText",
+                "text": "Prenota ristorante: 7/6/2018 20:30 IST"
+              }
+            ]
+          }
+        },
+        {
+          "type": "button",
+          "title": "22:00",
+          "click": {
+            "metadata": [
+              {
+                "type": "ExternalId",
+                "id": "SlotIdentidier"
+              },
+              {
+                "type": "BusinessEvent",
+                "timing": {
+                  "startTime": "2018-06-07T20:00:00Z",
+                  "duration": 3600
+                }
+              }
+            ],
+            "actions": [
+              {
+                "type": "publishText",
+                "text": "Prenota ristorante: 7/6/2018 22:00 IST"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Venerdi' 8 Giugno"
+    },
+    {
+      "type": "horizontal",
+      "elements": [
+        {
+          "type": "button",
+          "title": "12:30",
+          "click": {
+            "metadata": [
+              {
+                "type": "ExternalId",
+                "id": "SlotIdentidier"
+              },
+              {
+                "type": "BusinessEvent",
+                "timing": {
+                  "startTime": "2018-06-08T10:30:00Z",
+                  "duration": 3600
+                }
+              }
+            ],
+            "actions": [
+              {
+                "type": "publishText",
+                "text": "Prenota ristorante: 8/6/2018 12:30 IST"
+              }
+            ]
+          }
+        },
+        {
+          "type": "button",
+          "title": "14:00",
+          "click": {
+            "metadata": [
+              {
+                "type": "ExternalId",
+                "id": "SlotIdentidier"
+              },
+              {
+                "type": "BusinessEvent",
+                "timing": {
+                  "startTime": "2018-06-08T12:00:00Z",
+                  "duration": 3600
+                }
+              }
+            ],
+            "actions": [
+              {
+                "type": "publishText",
+                "text": "Prenota ristorante: 8/6/2018 14:00 IST"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+};
+		  
+		  
+        var listPickerSCMetadata = [{
+    "type": "BusinessEvent",
+    "timing": {
+        "presentedTimezoneOffset": 120
+    },
+    "location": {
+        "title": "Ristorante VIU Milano",
+        "la": 45.4829555,
+        "lo": 9.176966300000004,
+        "radius": 10
+    },
+    "title": "Ristorante VIU Milano"
+}, {
+    "type": "BusinessChatMessage",
+    "receivedMessage": {
+        "title": "Ristorante VIU Milano",
+        "imageURL": "https://cdn.dribbble.com/users/85668/screenshots/1352116/dribblble_mock_1x.jpg",
+        "style": "small",
+        "subtitle": "Clicca qui per vedere le date disponibili"
+    },
+    "replyMessage": {
+        "title": "Ristorante VIU Milano",
+        "style": "small",
+        "imageURL": "https://cdn.dribbble.com/users/85668/screenshots/1352116/dribblble_mock_1x.jpg",
+        "subtitle": "Grazie!"
+    }
+}];
+    
+            var cmdName = lpTag.agentSDK.cmdNames.writeSC;
+            var payload = {
+json: listPickerSC,
+metadata: listPickerSCMetadata
+};
+            lpTag.agentSDK.command(cmdName, payload, function (err) {
+               outputLog.value = err ? err : 'done';
+            });
+         }
+	     
+	     
+	
+ 	    
+ 
+         $(document).on('click', function(evt) {
+           if($(evt.target).is('#sendMap')) {
+ 		         var FreeTextMap = $( "#FreeTextMap" ).val();
+ 		         InterceptedLat = Number($( "#Latitude" ).val());
+ 		         InterceptedLong = Number($( "#Longitude" ).val());
+ 		         var DataMap = {
+ 			         "type": "vertical",
+ 			         "elements": [{
+ 				         "type": "map",
+ 				         "lo": InterceptedLong,
+ 				         "la": InterceptedLat,
+ 				         "click": {
+ 					         "actions": [{
+ 						         "type": "navigate",
+ 						         "lo": InterceptedLong,
+ 						         "la": InterceptedLat
+ 					         }]
+ 				         },
+ 				         "tooltip": "map tooltip"
+					 
+ 			         },
+ 			         {
+ 				         "type": "text",
+ 				         "text": FreeTextMap,
+ 				         "tooltip": "text tooltip",
+ 				         "rtl": true,
+                     			 "style": {
+	                     			"bold": true,
+	                     			"italic": true,
+	                     			"color": "#000000",
+	                     			"size": "large"
+                     			}
+ 			         }
+ 		         ]};
+             sendSC(DataMap);
+             }       
+          });
+ 	    
+ 	    
+ 	       $(document).on('click', function(evt) {
+               if($(evt.target).is('#sendCard')) {
+ 		               var ImageCard = $( "#ImageCard" ).val();
+ 		               var URLCard = $( "#URLCard" ).val();
+ 		               var FreeTextCard = $( "#FreeTextCard" ).val();
+ 		               var FreeTextToURL = $( "#FreeTextToURL" ).val();
+ 		               var DataCard = {
+ 			               "type": "vertical",
+ 			               "elements": [{
+ 				               "type": "image",
+ 				               "url": ImageCard,
+ 				               "tooltip": "image tooltip"
+ 			               },
+ 			               {
+ 				               "type": "text",
+ 				               "text": FreeTextCard,
+ 				               "tooltip": "brand new iphone 8",
+ 				               "style": {
+ 					               "bold": true,
+ 					               "size": "large",
+						       "color": "#000000"
+ 				               }
+ 			               },
+ 			               {
+ 				               "type": "button",
+ 				               "title": FreeTextToURL,
+ 				               "click": {
+ 					               "actions": [{
+ 						               "type": "link",
+ 						               "uri": URLCard
+ 					               }]
+ 				               }
+ 			               }
+ 		               ]};
+                 sendSC(DataCard);
+                 }   
+           });
+       
+ 	    
+ 	    
+ 	        $(document).on('click', function(evt) {
+               if($(evt.target).is('#sendVideo')) {
+ 		               var URLImage = $( "#URLImage" ).val();
+ 		               var URLVideo = $( "#URLVideo" ).val();
+ 		               var FreeTextVideo = $( "#FreeTextVideo" ).val();
+ 		               var DataVideo = {
+ 			               "type": "vertical",
+ 			               "elements": [{
+ 				               "type": "image",
+ 				               "url": URLImage,
+ 				               "tooltip": "image tooltip",
+ 				               "click": {
+ 					               "actions": [{
+ 						               "type": "link",
+ 						               "uri": URLVideo
+ 					               }]
+ 				               }
+ 			               },
+ 			               {
+ 				               "type": "text",
+ 				               "text": FreeTextVideo,
+					       "tooltip": "video",
+ 				               "style": {
+ 					               "bold": true,
+ 					               "size": "large",
+						       "color": "#000000"
+ 				               }
+ 			               }
+ 		               ]};
+                 sendSC(DataVideo);
+                 }
+            });
+	     
+	     
+	     
+	     	        $(document).on('click', function(evt) {
+               if($(evt.target).is('#sendQuickReplies')) {
+ 		                var cmdName = lpTag.agentSDK.cmdNames.writeSC; // = "Write SC"
+    var data = {
+      json: {
+        "type": "text",
+        "text": "do you like Messaging?",
+        "tooltip": "text tooltip",
+        "style": {
+          "bold": true,
+          "size": "large"
+        }
+      },
+      quickReplies: {
+        "type": "quickReplies",
+        "itemsPerRow": 8,
+        "replies": [
+          {
+            "type": "button",
+            "tooltip": "yes i do",
+            "title": "yes",
+            "click": {
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "yes"
+                }
+              ],
+              "metadata": [
+                {
+                  "type": "ExternalId",
+                  "id": "Yes-1234"
+                }
+              ]
+            }
+          },
+          {
+            "type": "button",
+            "tooltip": "No!",
+            "title": "No!",
+            "click": {
+              "actions": [
+                {
+                  "type": "publishText",
+                  "text": "No!"
+                }
+              ],
+              "metadata": [
+                {
+                  "type": "ExternalId",
+                  "id": "No-4321"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      metadata: [	//metadata is optional
+        {"type": "ExternalId", "id": "running364"},
+        {"type": "ExternalId", "id": "soccer486"}
+      ]
+    };
+    lpTag.agentSDK.command(cmdName, data, function (err) {
+               outputLog.value = err ? err : 'done';
+            });
+		       
+		       
+		       
+		       
+                 }
+            });
+		
+		
+		
+		
+ 	   $(document).on('click', function(evt) {
+               if($(evt.target).is('#sendTags')) {
+		       var FirstNameTags = $( "#FirstNameTags" ).val();
+		       var LastNameTags = $( "#LastNameTags" ).val();
+		       var AvatarTags = $( "#AvatarTags" ).val();
+		       var EmailTags = $( "#EmailTags" ).val();
+		       var PhoneTags = $( "#PhoneTags" ).val();
+		       var myObject = {
+			       firstName: FirstNameTags,
+			       lastName: LastNameTags,
+			       avatarUrl: AvatarTags,
+			       email: EmailTags,
+			       phone: PhoneTags   
+		       };
+		       
+		       lpTag.agentSDK.setConsumerProfile(myObject, function(res){
+			       console.log('set consumer profile success ', res);
+			       $('#responseTags').html('set consumer profile success');
+		       }, function(err){
+			       console.log('set consumer profile error ', err);
+			       $('#responseTags').html('set consumer profile error');
+		       });
+		       console.log("clicccckkkk");      
+                 }   
+           });
+	     
+	     
+	     
+	     
+	     $(document).on('click', function(evt) {
+               if($(evt.target).is('#submitRestaurant')) {
+		       restaurantappleSC();
+                 }
+            });
+       	    
+	     
+	     
+	      $(document).on('click', function(evt) {
+               if($(evt.target).is('#submitAccountNumber')) {
+ 		           accountnumberappleSC();    
+                 }
+            });
+	     
+	     
+	     
+	     $(document).on('click', function(evt) {
+               if($(evt.target).is('#example1FB')) {
+		       example1FB();
+                 }
+            });
+	     
+	     
+	     
+	     $(document).on('click', function(evt) {
+               if($(evt.target).is('#example2FB')) {
+		       example2FB();
+                 }
+            });
+	     
+	     
+	     
+	     $(document).on('click', function(evt) {
+               if($(evt.target).is('#example3FB')) {
+		       example3FB();
+                 }
+            });
+ 	    
+ 	
+ 	    
+ 	    
+ 	    
+ 	    
+ 	    
+ 	    
+       
+       
+      
+       
+            function initAutocomplete() {
+                  var map = new google.maps.Map(document.getElementById('map'), {
+                        center: {lat: 51.5, lng: -0.12},
+                        zoom: 7,
+                        mapTypeId: 'roadmap'
+                  });
+                  google.maps.event.addListener(map, 'click', function(event) {
+                        InterceptedLat = event.latLng.lat;	
+                        InterceptedLong = event.latLng.lng
+                        $('#Latitude').val(InterceptedLat);
+                        $('#Longitude').val(InterceptedLong);
+                  });
+         
+                  // Create the search box and link it to the UI element.
+                  var input = document.getElementById('pac-input');
+                  var searchBox = new google.maps.places.SearchBox(input);
+                  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+ 
+                  // Bias the SearchBox results towards current map's viewport.
+                  map.addListener('bounds_changed', function() {
+                        searchBox.setBounds(map.getBounds());
+                  });
+ 
+                  var markers = [];
+                  // Listen for the event fired when the user selects a prediction and retrieve
+                  // more details for that place.
+                  searchBox.addListener('places_changed', function() {
+                        var places = searchBox.getPlaces();
+                        if (places.length == 0) {
+                              return;
+                        }
+                        // Clear out the old markers.
+                        markers.forEach(function(marker) {
+                              marker.setMap(null);
+                        });
+                        markers = [];
+ 
+                        // For each place, get the icon, name and location.
+                        var bounds = new google.maps.LatLngBounds();
+                        places.forEach(function(place) {
+                              if (!place.geometry) {
+                                    console.log("Returned place contains no geometry");
+                                    return;
+                              }
+                              var icon = {
+                                    url: place.icon,
+                                    size: new google.maps.Size(71, 71),
+                                    origin: new google.maps.Point(0, 0),
+                                    anchor: new google.maps.Point(17, 34),
+                                    scaledSize: new google.maps.Size(25, 25)
+                              };
+ 
+                              // Create a marker for each place.
+                              markers.push(new google.maps.Marker({
+                                    map: map,
+                                    icon: icon,
+                                    title: place.name,
+                                    position: place.geometry.location
+                              }));
+ 
+                              if (place.geometry.viewport) {
+                              // Only geocodes have viewport.
+                                    bounds.union(place.geometry.viewport);
+                              } else {
+                                    bounds.extend(place.geometry.location);
+                              }
+                        });
+                        map.fitBounds(bounds);
+                  });
+            }
+       
+     </script>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClk9cYf1HsmnrBwzxrfYtJErFlOcvI7V4&libraries=places&callback=initAutocomplete"
+          async defer></script>
+     
+     </head>
+   
+     <body>
+	 <div id="genericSC">
+         <div class="tab">
+               <button id="buttonMap" class="tablinks tabMap" onclick="openContent(event, 'Map')">Map</button>
+               <button id="buttonCard" class="tablinks tabCard" onclick="openContent(event, 'Card')">Card</button>
+               <button id="buttonVideo" class="tablinks tabVideo" onclick="openContent(event, 'Video')">Video</button>
+	       <button id="buttonQuickReplies" class="tablinks tabQuickReplies" onclick="openContent(event, 'QuickReplies')">Quick</button>
+	       <button id="buttonTags" class="tablinks Tags" onclick="openContent(event, 'Tags')">Tags</button>
+         </div>
+ 
+         <div id="Map" class="tabcontent">
+               <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+               <div id="map"></div>
+               <form>
+                     Latitude:<br>
+                     <input id="Latitude" type="text" name="Latitude" value="45.437900390993974">
+                     <br>
+                     Longitude:<br>
+                     <input id="Longitude" type="text" name="Longitude" value="9.200615286827087">
+                     <br>
+                     FreeText:<br>
+                     <input id="FreeTextMap" type="text" name="FreeTextMap" value="Amplifon Via Giuseppe Ripamonti, 133 20141 Milano MI Italy">
+               </form>
+ 	            <div id="sendMap" class="generate">Generate Code</div>
+         </div>
+      
+         <div id="Card" class="tabcontent">
+               <form>
+                     <br>
+                     Image:<br>
+                     <input id="ImageCard" type="text" name="ImageCard" value="https://i.imgur.com/MC6Ex8X.png">
+                     <br>
+                     FreeText:<br>
+                     <input id="FreeTextCard" type="text" name="FreeTextCard">
+                     <br>
+                     RedirectToURL:<br>
+                     <input id="URLCard" type="text" name="URLCard" value="https://marcodagolini.github.io/webmessaging1/">
+                     <br>
+                     FreeTextURL:<br>
+                     <input id="FreeTextToURL" type="text" name="FreeTextToURL">
+                     <br>
+               </form>
+ 	            <div id="sendCard" class="generate">Generate Code</div>
+         </div>
+ 
+         <div id="Video" class="tabcontent">
+               <form>
+                     <br>
+                     URLImage:<br>
+                     <input id="URLImage" type="text" name="URLImage" value="https://i.imgur.com/jgrvbJU.png">
+                     <br>
+                     URLVideo:<br>
+                     <input id="URLVideo" type="text" name="URLVideo" value="https://youtu.be/C-EJhFz0snY">
+                     <br>
+                     FreeText:<br>
+                     <input id="FreeTextVideo" type="text" name="FreeTextVideo" value="Hearing Aid set up">
+                     <br>
+               </form>
+ 	            <div id="sendVideo" class="generate">Generate Code</div>
+         </div>
+		 
+	<div id="QuickReplies" class="tabcontent">
+		<br><br><br><br><br><br>
+ 	            <div id="sendQuickReplies" class="generate">Generate Code</div>
+         </div>
+		 
+       <div id="Tags" class="tabcontent">
+              
+               <form>
+                     <br>
+                     First Name:<br>
+                     <input id="FirstNameTags" type="text" name="FirstNameTags">
+                     <br>
+                     Last Name:<br>
+                     <input id="LastNameTags" type="text" name="LastNameTags">
+                     <br>
+                     Avatar URL:<br>
+                     <input id="AvatarTags" type="text" name="AvatarTags">
+                     <br>
+                     Email Address:<br>
+                     <input id="EmailTags" type="text" name="EmailTags">
+                     <br>
+                     Phone Number:<br>
+                     <input id="PhoneTags" type="text" name="PhoneTags">
+                     <br>
+               </form>
+                     
+ 	            <div id="sendTags" class="generate">Generate Code</div>
+		 <br>
+		    <div id="responseTags"></div>
+</div>
+		 
+		 
+	 </div>
+	 <div id="appleSC">
+		 <button class="applebutton" id="submitRestaurant" >VIU Card</button>
+		 </br></br>
+		 <button class="applebutton" id="submitAccountNumber" >Invia prime disponibilita'</button>
+	 </div>
+	 <div id="facebookSC">
+		 <button class="applebutton" id="example1FB" >example1FB</button>
+		 </br></br>
+		 <button class="applebutton" id="example2FB" >example2FB</button>
+		 </br></br>
+		 <button class="applebutton" id="example3FB" >example3FB</button>
+	 </div>
+        
+    </body>
+</html> 
