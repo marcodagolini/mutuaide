@@ -16,26 +16,22 @@
  	font-family: Arial, Helvetica, sans-serif;
  }
 	     
-.applebutton {
-    background-color: #f68a1f;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 4px;
-    cursor: pointer;
-	  border-radius: 4px;
-	  -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-	  font-family: "Myriad pro","Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",sans-serif;
+.myButton {
+	  background-color: #4CAF50;
+	  color: white;
+	  padding: 10px 10px;
+	  margin: 8px 0;
+	  border: none;
+	  cursor: pointer;
+	  width: 100px;
+	  height: 40px;
+	  font-size: 30px;
 }
-.applebutton:hover {
-    background-color: #da7009;
-    color: white;	
+.myButton:hover {
+	  background-color: #69BE72;
 }
+	     
+
         
 
      </style>
@@ -69,7 +65,7 @@
 	
  	    
  	       $(document).on('click', function(evt) {
-               if($(evt.target).is('#sendCard')) {
+               if($(evt.target).is('#submitCars')) {
  		               var ImageCard = $( "#ImageCard" ).val();
  		               var URLCard = $( "#URLCard" ).val();
  		               var FreeTextCard = $( "#FreeTextCard" ).val();
@@ -116,9 +112,9 @@
    
      <body>
 
-		 <button class="applebutton" id="submitRestaurant" >VIU Card</button>
+		 <button class="myButton" id="submitCars" >VIU Card</button>
 		 
-		 <button class="applebutton" id="submitAccountNumber" >Invia prime disponibilita'</button>
+		 <button class="myButton" id="submitHotels" >Invia prime disponibilita'</button>
 
         
     </body>
