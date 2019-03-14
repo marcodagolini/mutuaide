@@ -91,10 +91,96 @@
  	       $(document).on('click', function(evt) {
                if($(evt.target).is('#submitCars')) {
 		       
-		       var DataCard1 = {
+		       var DataCard = {
     "type": "carousel",
     "padding": 10,
     "elements": [{
+            "type": "vertical",
+            "tag": "generic",
+            "elements": [{
+                "type": "vertical",
+                "elements": [{
+                    "type": "image",
+                    "url": "https://i.imgur.com/tAt7tEe.png",
+                    "tooltip": "Mini"
+                }, {
+                    "type": "text",
+                    "tag": "title",
+                    "text": "BMW",
+                    "tooltip": "BMW"
+                }, {
+                    "type": "text",
+                    "tag": "subtitle",
+                    "text": "Mini Cooper",
+                    "tooltip": "Mini Cooper"
+                }, {
+                    "type": "button",
+                    "tooltip": "Choose this car",
+                    "title": "Choose this car",
+                    "click": {
+                        "actions": [{
+                            "type": "publishText",
+                            "text": "My choice is Mini Cooper"
+                        }]
+                    }
+                }, {
+                    "type": "button",
+                    "tooltip": "More info",
+                    "title": "More info",
+                    "click": {
+                        "actions": [{
+                            "type": "link",
+                            "name": "Mini Cooper",
+                            "uri": "https://www.mini.it/it_IT/home/range/mini-3-door-hatch.html"
+                        }]
+                    }
+                }]
+            }]
+        },
+        {
+            "type": "vertical",
+            "tag": "generic",
+            "elements": [{
+                "type": "vertical",
+                "elements": [{
+                    "type": "image",
+                    "url": "https://i.imgur.com/xb2iCVH.png",
+                    "tooltip": "Mercedes Classe A"
+                }, {
+                    "type": "text",
+                    "tag": "title",
+                    "text": "Mercedes",
+                    "tooltip": "Mercedes"
+                }, {
+                    "type": "text",
+                    "tag": "subtitle",
+                    "text": "Classe A",
+                    "tooltip": "Classe A"
+                }, {
+                    "type": "button",
+                    "tooltip": "Choose this car",
+                    "title": "Choose this car",
+                    "click": {
+                        "actions": [{
+                            "type": "publishText",
+                            "text": "My choice is Mercedes Classe A"
+                        }]
+                    }
+                }, {
+                    "type": "button",
+                    "tooltip": "More info",
+                    "title": "More info",
+                    "click": {
+                        "actions": [{
+                            "type": "link",
+                            "name": "Classe A",
+                            "uri": "https://www.mercedes-benz.it/passengercars/mercedes-benz-cars/models/a-class/hatchback/explore.html"
+                        }]
+                    }
+                }]
+            }]
+        },
+        {
             "type": "vertical",
             "tag": "generic",
             "elements": [{
@@ -115,8 +201,8 @@
                     "tooltip": "subtitle"
                 }, {
                     "type": "button",
-                    "tooltip": "Add to cart",
-                    "title": "Add to cart",
+                    "tooltip": "Choose this car",
+                    "title": "Choose this car",
                     "click": {
                         "actions": [{
                             "type": "publishText",
@@ -125,8 +211,8 @@
                     }
                 }, {
                     "type": "button",
-                    "tooltip": "Add to cart",
-                    "title": "Add to cart",
+                    "tooltip": "More info",
+                    "title": "More info",
                     "click": {
                         "actions": [{
                             "type": "link",
@@ -138,6 +224,67 @@
             }]
         },
         {
+            "type": "vertical",
+            "tag": "generic",
+            "elements": [{
+                "type": "vertical",
+                "elements": [{
+                    "type": "image",
+                    "url": "https://i.imgur.com/OtHPODe.png",
+                    "tooltip": "Flowers"
+                }, {
+                    "type": "text",
+                    "tag": "title",
+                    "text": "Title",
+                    "tooltip": "Title"
+                }, {
+                    "type": "text",
+                    "tag": "subtitle",
+                    "text": "subtitle",
+                    "tooltip": "subtitle"
+                }, {
+                    "type": "button",
+                    "tooltip": "Choose this car",
+                    "title": "Choose this car",
+                    "click": {
+                        "actions": [{
+                            "type": "publishText",
+                            "text": "Add to cart pressed"
+                        }]
+                    }
+                }, {
+                    "type": "button",
+                    "tooltip": "More info",
+                    "title": "More info",
+                    "click": {
+                        "actions": [{
+                            "type": "link",
+                            "name": "Flowers",
+                            "uri": "https://www.inter.it/it/hp"
+                        }]
+                    }
+                }]
+            }]
+        }
+    ]
+}
+
+	
+                 sendSC(DataCard);
+                 }   
+           });
+		
+		
+		
+		
+		
+		 	       $(document).on('click', function(evt) {
+               if($(evt.target).is('#submitHotels')) {
+		       
+		       var DataCard = {
+    "type": "carousel",
+    "padding": 10,
+    "elements": [{
             "type": "vertical",
             "tag": "generic",
             "elements": [{
@@ -312,46 +459,14 @@
     ]
 }
 
-		       
-		       
-		       
-		       
-		       
-		       
-		       
-		       
-		       
- 		               var DataCard = {
- 			               "type": "vertical",
- 			               "elements": [{
- 				               "type": "image",
- 				               "url": "https://i.imgur.com/OtHPODe.png",
- 				               "tooltip": "image tooltip"
- 			               },
- 			               {
- 				               "type": "text",
- 				               "text": "My text",
- 				               "tooltip": "brand new iphone 8",
- 				               "style": {
- 					               "bold": true,
- 					               "size": "large",
-						       "color": "#000000"
- 				               }
- 			               },
- 			               {
- 				               "type": "button",
- 				               "title": "This is an URL",
- 				               "click": {
- 					               "actions": [{
- 						               "type": "link",
- 						               "uri": "https://www.inter.it/it/hp"
- 					               }]
- 				               }
- 			               }
- 		               ]};
-                 sendSC(DataCard1);
+	
+                 sendSC(DataCard);
                  }   
            });
+		
+		
+		
+		
        
  	 
 	
