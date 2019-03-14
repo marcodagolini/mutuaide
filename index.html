@@ -89,20 +89,16 @@
  	    
  	       $(document).on('click', function(evt) {
                if($(evt.target).is('#submitCars')) {
- 		               var ImageCard = $( "#ImageCard" ).val();
- 		               var URLCard = $( "#URLCard" ).val();
- 		               var FreeTextCard = $( "#FreeTextCard" ).val();
- 		               var FreeTextToURL = $( "#FreeTextToURL" ).val();
  		               var DataCard = {
  			               "type": "vertical",
  			               "elements": [{
  				               "type": "image",
- 				               "url": ImageCard,
+ 				               "url": "https://i.imgur.com/OtHPODe.png",
  				               "tooltip": "image tooltip"
  			               },
  			               {
  				               "type": "text",
- 				               "text": FreeTextCard,
+ 				               "text": "My text",
  				               "tooltip": "brand new iphone 8",
  				               "style": {
  					               "bold": true,
@@ -112,11 +108,11 @@
  			               },
  			               {
  				               "type": "button",
- 				               "title": FreeTextToURL,
+ 				               "title": "This is an URL",
  				               "click": {
  					               "actions": [{
  						               "type": "link",
- 						               "uri": URLCard
+ 						               "uri": "https://www.inter.it/it/hp"
  					               }]
  				               }
  			               }
