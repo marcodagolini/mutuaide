@@ -30,7 +30,7 @@
 	width: 100px;
 	height: 40px;
 	font-size: 30px;
-	bottom: 140px;
+	bottom: 200px;
 	right: 20px;
 	position: absolute;
 }
@@ -39,7 +39,25 @@
 }
 	     
 	     
-.myButton1 {
+ .myButton1 {
+	background-color: #4CAF50;
+	color: white;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100px;
+	height: 40px;
+	font-size: 30px;
+	bottom: 140px;
+	right: 20px;
+	position: absolute;
+}
+.myButton1:hover {
+	background-color: #69BE72;
+}
+	     
+	     
+.myButton2 {
 	background-color: #4CAF50;
 	color: white;
 	margin: 8px 0;
@@ -52,11 +70,11 @@
 	right: 20px;
 	position: absolute;
 }
-.myButton1:hover {
+.myButton2:hover {
 	background-color: #69BE72;
 }
 	     
-.myButton2 {
+.myButton3 {
 	background-color: #4CAF50;
 	color: white;
 	margin: 8px 0;
@@ -69,7 +87,7 @@
 	right: 20px;
 	position: absolute;
 }
-.myButton2:hover {
+.myButton3:hover {
 	background-color: #69BE72;
 }
 	     
@@ -98,6 +116,113 @@
 				outputLog.value = err ? err : 'done';
 			});
 		}
+		
+		
+		
+		
+		
+	$(document).on('click', function(evt) {
+               if($(evt.target).is('#submitMaps')) {
+		       
+		       var DataCard = {
+    "type": "carousel",
+    "padding": 10,
+    "elements": [{
+            "type": "vertical",
+            "tag": "generic",
+            "elements": [{
+                "type": "vertical",
+                "elements": [{
+                    "type": "image",
+                    "url": "https://i.imgur.com/NrPMgUi.png",
+                    "tooltip": "Prezzo"
+                }, {
+                    "type": "text",
+                    "tag": "title",
+                    "text": "Prezzo",
+                    "tooltip": "Prezzo"
+                }, {
+                    "type": "text",
+                    "tag": "subtitle",
+                    "text": "fisso per 12 mesi",
+                    "tooltip": "fisso per 12 mesi"
+                }, {
+                    "type": "button",
+                    "tooltip": "Scegli questo prodotto",
+                    "title": "Scegli questo prodotto",
+                    "click": {
+                        "actions": [{
+                            "type": "publishText",
+                            "text": "Prezzo fisso"
+                        }]
+                    }
+                }, {
+                    "type": "button",
+                    "tooltip": "Vai alla pagina web",
+                    "title": "Vai alla pagina web",
+                    "click": {
+                        "actions": [{
+                            "type": "link",
+                            "name": "Vai alla pagina web",
+                            "uri": "https://www.sorgenia.it/sorgenia-promo-consumer?campaign_code=SEM-BrandExact-Milano&ccode=Paid-R-KWD-G-R-BrandExact&gclid=EAIaIQobChMI-aXhw66g4wIVSUHTCh25UACyEAAYASAAEgIte_D_BwE"
+                        }]
+                    }
+                }]
+            }]
+        },
+        {
+            "type": "vertical",
+            "tag": "generic",
+            "elements": [{
+                "type": "vertical",
+                "elements": [{
+                    "type": "image",
+                    "url": "https://i.imgur.com/mcoERQO.png",
+                    "tooltip": "Risparmio"
+                }, {
+                    "type": "text",
+                    "tag": "title",
+                    "text": "Risparmio",
+                    "tooltip": "Risparmio"
+                }, {
+                    "type": "text",
+                    "tag": "subtitle",
+                    "text": "420 euro/anno",
+                    "tooltip": "420 euro/anno"
+                }, {
+                    "type": "button",
+                    "tooltip": "Scegli questo prodotto",
+                    "title": "Scegli questo prodotto",
+                    "click": {
+                        "actions": [{
+                            "type": "publishText",
+                            "text": "Risparmio 420 euro anno"
+                        }]
+                    }
+                }, {
+                    "type": "button",
+                    "tooltip": "Vai alla pagina web",
+                    "title": "Vai alla pagina web",
+                    "click": {
+                        "actions": [{
+                            "type": "link",
+                            "name": "Vai alla pagina web",
+                            "uri": "https://www.sorgenia.it/sorgenia-promo-consumer?campaign_code=SEM-BrandExact-Milano&ccode=Paid-R-KWD-G-R-BrandExact&gclid=EAIaIQobChMI-aXhw66g4wIVSUHTCh25UACyEAAYASAAEgIte_D_BwE"
+                        }]
+                    }
+                }]
+            }]
+        }
+    ]
+}
+
+	
+                 sendSC(DataCard);
+                 }   
+           });
+		
+		
+		
 		
 		
 	
@@ -730,9 +855,10 @@
      <body>
 	<div id="bground">
 
-		 <button class="myButton0" id="submitOffers" >Offers</button>
-		 <button class="myButton1" id="submitCars" >Cars</button>
-		 <button class="myButton2" id="submitHotels" >Hotels</button>
+		 <button class="myButton0" id="submitMaps" >Maps</button>
+		 <button class="myButton1" id="submitOffers" >Offers</button>
+		 <button class="myButton2" id="submitCars" >Cars</button>
+		 <button class="myButton3" id="submitHotels" >Hotels</button>
 	</div>
 
         
