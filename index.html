@@ -118,6 +118,20 @@
 			});
 		}
 		
+		var onSuccess1 = function(data) {
+                // Do something with the returning data
+                	console.log("success --> " + JSON.stringify(data));
+                };
+                
+                var onError1 = function(data) {
+                // Do something with the returning data
+                	console.log("error --> " + JSON.stringify(data));
+                };
+		
+		
+		
+		SDK.get('SDE', onSuccess1, onError1);
+		
 		
 		
 		
