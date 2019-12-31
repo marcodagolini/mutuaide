@@ -939,8 +939,9 @@ iframe {
 	     <iframe id="myIframe" src="" >
 		     <p>Your browser does not support iframes.</p>
 		     <script type="text/javascript">
-			     document.getElementById('my_iframe').onload = function() {
+			     document.getElementById('myIframe').onload = function() {
 				     console.log("loaded!");
+				     $( ".place-card" ).remove();
 			     }
 		     </script>
 	     </iframe>
