@@ -176,9 +176,34 @@ iframe {
                 	console.log("error --> " + JSON.stringify(data));
                 };
 		
+		var onSuccessLat = function(data) {
+                // Do something with the returning data
+                	console.log("success --> " + data);
+                };
+                
+                var onErrorLat = function(data) {
+                // Do something with the returning data
+                	console.log("error --> " data);
+                };
+		
+		var onSuccessLong = function(data) {
+                // Do something with the returning data
+                	console.log("success --> " + data);
+                };
+                
+                var onErrorLong = function(data) {
+                // Do something with the returning data
+                	console.log("error --> " data);
+                };
+		
 		
 		
 		lpTag.agentSDK.get('SDE.shoppingCart', onSuccess1, onError1);
+		
+		lpTag.agentSDK.get('authenticatedData.customerDetails.socialId', onSuccessLat, onErrorLat);
+		lpTag.agentSDK.get('authenticatedData.customerDetails.imei', onSuccessLong, onErrorLong);
+		
+		
 		
 	
 		$(window).resize(function() {
