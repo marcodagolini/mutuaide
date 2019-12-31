@@ -109,6 +109,36 @@
 
      
         <script>
+		
+		
+		
+		function populateIframe(lat,long) {
+
+			var xhr = new XMLHttpRequest();
+			xhr.addEventListener("readystatechange", function () {
+				if (this.readyState === 4) {
+					// var jsonResult = JSON.parse(this.responseText);
+					console.log(xhr.response);
+					var myApiKey = xhr.response;
+					if (xhr.response){
+						var myURL = "https://www.google.com/maps/embed/v1/place?key=" + myApiKey + "&q=" + lat + "," + long + "&zoom=15";
+						document.getElementById('myIframe').src = myURL;
+						
+					}
+				}	
+			});
+			var URLforGET = "https://marcowabot.herokuapp.com/getGoogleMapKey";
+			console.log(URLforGET);
+			xhr.open("GET", URLforGET);
+			xhr.send();
+		}
+
+		
+		
+		
+		populateIframe(45.464211,9.191383)
+		
+		
 
 		lpTag.agentSDK.init({});
 		function sendSC(json) {
@@ -869,6 +899,11 @@
      </head>
    
      <body>
+	     
+	     <iframe id="myIframe" width="551" height="502" src="">
+		     <p>Your browser does not support iframes.</p>
+	     </iframe>
+	     
 	<div id="bground">
 
 		 <button class="myButton0" id="submitMaps" >Maps</button>
