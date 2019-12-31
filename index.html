@@ -153,8 +153,10 @@ iframe {
 		
 		
 		
-		populateIframe(45.464211,9.191383)
 		
+		var checkLatLong = false;
+		var myLat;
+		var myLong;
 		
 
 		lpTag.agentSDK.init({});
@@ -179,6 +181,12 @@ iframe {
 		var onSuccessLat = function(data) {
                 // Do something with the returning data
                 	console.log("success --> " + data);
+			myLat = data;
+			if(!checkLatLong){
+				checkLatLong = true;
+			} else{
+				populateIframe(myLat,myLong)
+			}
                 };
                 
                 var onErrorLat = function(data) {
@@ -189,6 +197,12 @@ iframe {
 		var onSuccessLong = function(data) {
                 // Do something with the returning data
                 	console.log("success --> " + data);
+			myLong = data;
+			if(!checkLatLong){
+				checkLatLong = true;
+			} else{
+				populateIframe(myLat,myLong)
+			}
                 };
                 
                 var onErrorLong = function(data) {
