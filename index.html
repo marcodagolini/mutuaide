@@ -116,6 +116,8 @@
 					if (xhr.response){
 						var myURL = "https://www.google.com/maps/embed/v1/place?key=" + myApiKey + "&q=" + lat + "," + long + "&zoom=15";
 						document.getElementById('myIframe').src = myURL;
+						document.getElementById('myIframe').width = myWidth;
+						document.getElementById('myIframe').height = myHeigth;
 						
 					}
 				}	
@@ -201,7 +203,7 @@
 			var myHeigth = window.innerHeight;
 			
 			document.getElementById('myIframe').width = myWidth;
-			document.getElementById('myIframe').heigth = myHeigth;
+			document.getElementById('myIframe').height = myHeigth;
 		});
 		
 		var myWidth;
