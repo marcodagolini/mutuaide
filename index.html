@@ -140,6 +140,11 @@ iframe {
 						var myURL = "https://www.google.com/maps/embed/v1/place?key=" + myApiKey + "&q=" + lat + "," + long + "&zoom=15";
 						document.getElementById('myIframe').src = myURL;
 						
+						document.getElementById('myIframe').onload = function() {
+							console.log("loaded!");
+							$( ".place-card" ).remove();
+						}
+						
 					}
 				}	
 			});
@@ -938,12 +943,6 @@ iframe {
 
 	     <iframe id="myIframe" src="" >
 		     <p>Your browser does not support iframes.</p>
-		     <script type="text/javascript">
-			     document.getElementById('myIframe').onload = function() {
-				     console.log("loaded!");
-				     $( ".place-card" ).remove();
-			     }
-		     </script>
 	     </iframe>
 		      
 
