@@ -141,11 +141,6 @@ iframe {
 						var myURL = "https://www.google.com/maps/embed/v1/place?key=" + myApiKey + "&q=" + lat + "," + long + "&zoom=15";
 						document.getElementById('myIframe').src = myURL;
 						
-						document.getElementById('myIframe').onload = function() {
-							console.log("loaded!");
-							$( ".place-card" ).remove();
-						}
-						
 					}
 				}	
 			});
