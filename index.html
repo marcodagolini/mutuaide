@@ -184,6 +184,9 @@ iframe {
 		$(window).resize(function() {
 			var myWidth = window.innerWidth
 			var myHeigth = window.innerHeight;
+			
+			document.getElementById('myIframe').width = myWidth;
+			document.getElementById('myIframe').heigth = myHeigth;
 		});
 		
 		var myWidth;
@@ -936,6 +939,11 @@ iframe {
 
 	     <iframe id="myIframe" src="" >
 		     <p>Your browser does not support iframes.</p>
+		     <script type="text/javascript">
+			     document.getElementById('my_iframe').onload = function() {
+				     console.log("loaded!");
+			     }
+		     </script>
 	     </iframe>
 		      
 
