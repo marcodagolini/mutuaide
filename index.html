@@ -130,8 +130,7 @@ iframe {
 			
 			
 			
-			document.getElementById('myIframe').width = myWidth;
-			document.getElementById('myIframe').heigth = myHeigth;
+			
 
 			var xhr = new XMLHttpRequest();
 			xhr.addEventListener("readystatechange", function () {
@@ -188,8 +187,16 @@ iframe {
 			var myHeigth = window.innerHeight;
 		});
 		
-		var myWidth = window.innerWidth
-		var myHeigth = window.innerHeight;
+		var myWidth;
+		var myHeigth;
+		
+		$(document).ready(function() {
+			var myWidth = window.innerWidth
+			var myHeigth = window.innerHeight;
+			
+			document.getElementById('myIframe').width = myWidth;
+			document.getElementById('myIframe').heigth = myHeigth;
+		});
 		
 		
 		
