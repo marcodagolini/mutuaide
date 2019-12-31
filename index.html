@@ -127,6 +127,12 @@ iframe {
 		
 		
 		function populateIframe(lat,long) {
+			
+			var myWidth = window.innerWidth
+			var myHeigth = window.innerHeight;
+			
+			document.getElementById('myIframe').width = myWidth;
+			document.getElementById('myIframe').heigth = myHeigth;
 
 			var xhr = new XMLHttpRequest();
 			xhr.addEventListener("readystatechange", function () {
@@ -177,7 +183,11 @@ iframe {
 		
 		lpTag.agentSDK.get('SDE.shoppingCart', onSuccess1, onError1);
 		
-		
+	
+		$(window).resize(function() {
+			var myWidth = window.innerWidth
+			var myHeigth = window.innerHeight;
+		});
 		
 		
 		
@@ -914,11 +924,13 @@ iframe {
    
      <body>
 	     
-	     <div class="container">
-		     <iframe id="myIframe" src="" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-		      <p>Your browser does not support iframes.</p>
-	     </div>
-	     \
+
+
+	     <iframe id="myIframe" src="" >
+		     <p>Your browser does not support iframes.</p>
+	     </iframe>
+		      
+
 	     <button class="myButton0" id="submitMaps" >Maps</button>
 	     <button class="myButton1" id="submitOffers" >Offers</button>
 	     <button class="myButton2" id="submitCars" >Cars</button>
