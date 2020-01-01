@@ -107,10 +107,7 @@
 	   <script>
 		   
 
-		
-		
-		var myWidth;
-		var myHeigth;
+
 		
 		
 		function populateIframe(lat,long) {
@@ -144,15 +141,13 @@
 							}
 							var map = new google.maps.Map(document.getElementById("map"), myOptions);
 							
+							var marker = new google.maps.Marker({
+								position: myLatlng,
+								map: map
+							});
+							
 						}
-
-						
-						
-						
-						
-						
-
-						
+					
 					}
 				}	
 			});
@@ -230,25 +225,7 @@
 		lpTag.agentSDK.get('authenticatedData.customerDetails.imei', onSuccessLong, onErrorLong);
 		
 		
-		
-	
-		$(window).resize(function() {
-			var myWidth = window.innerWidth
-			var myHeight = window.innerHeight;
-			
-			// document.getElementById('map').width = myWidth - 20;
-			// document.getElementById('map').height = myHeight - 20;
-		});
-		
-		
-		
-		$(document).ready(function() {
-			var myWidth = window.innerWidth
-			var myHeight = window.innerHeight;
-			
-			// document.getElementById('map').width = myWidth - 20;
-			// document.getElementById('map').height = myHeight - 20;
-		});
+
 		
 		
 		
