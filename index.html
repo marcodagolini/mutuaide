@@ -100,11 +100,7 @@
 	   
 	   <script>
 		   
-		   
-		   google.maps.event.addListener(map, "click", function (e) {
-			   //lat and lng is available in e object
-			   console.log(JSON.stringify(e));
-		   });
+
 		
 		
 		var myWidth;
@@ -124,8 +120,18 @@
 					console.log(xhr.response);
 					var myApiKey = xhr.response;
 					if (xhr.response){
-						var myURL = "https://www.google.com/maps/embed/v1/place?key=" + myApiKey + "&q=" + lat + "," + long + "&zoom=15";
-						document.getElementById('myIframe').src = myURL;
+						var myScript = document.createElement('script');
+						var mySource = "https://maps.googleapis.com/maps/api/js?key=" + myApiKey + "&libraries=places&callback=initAutocomplete";
+						myScript.setAttribute('src','http://example.com/site.js');
+						document.head.appendChild(myScript);
+						// var myURL = "https://www.google.com/maps/embed/v1/place?key=" + myApiKey + "&q=" + lat + "," + long + "&zoom=15";
+						// document.getElementById('myIframe').src = myURL;
+						
+						var map = new google.maps.Map(document.getElementById('map'), {
+							center: {lat: lat, lng: long},
+							zoom: 15,
+							mapTypeId: 'roadmap'
+						});
 
 						
 					}
@@ -967,6 +973,8 @@
 	     <iframe id="myIframe" src="" >
 		     <p>Your browser does not support iframes.</p>
 	     </iframe>
+	     
+	     <div id="map"></div>
 		      
 
 	     <button class="myButton0" id="submitMaps" >Maps</button>
