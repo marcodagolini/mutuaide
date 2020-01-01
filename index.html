@@ -122,7 +122,7 @@
 					if (xhr.response){
 						var myScript = document.createElement('script');
 						var mySource = "https://maps.googleapis.com/maps/api/js?key=" + myApiKey + "&libraries=places&callback=initAutocomplete";
-						myScript.setAttribute('src','http://example.com/site.js');
+						myScript.setAttribute('src',mySource);
 						document.head.appendChild(myScript);
 						// var myURL = "https://www.google.com/maps/embed/v1/place?key=" + myApiKey + "&q=" + lat + "," + long + "&zoom=15";
 						// document.getElementById('myIframe').src = myURL;
