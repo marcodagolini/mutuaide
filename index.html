@@ -153,6 +153,42 @@
 								var clickLon = event.latLng.lng();
 								console.log("lat --> " + clickLat);
 								console.log("long --> " + clickLon);
+								
+								
+								
+								var DataMap = {
+									"type": "vertical",
+									"elements": [{
+										"type": "map",
+										"lo": clickLon,
+										"la": clickLat,
+										"click": {
+											"actions": [{
+												"type": "navigate",
+												"lo": clickLon,
+												"la": clickLat
+											}]
+										},
+										"tooltip": "map tooltip"
+					 
+									},
+										     {
+											     "type": "text",
+											     "text": "Please navigate here!",
+											     "tooltip": "text tooltip",
+											     "rtl": true,
+											     "style": {
+												     "bold": true,
+												     "italic": true,
+												     "color": "#000000",
+												     "size": "large"
+											     }
+										     }
+										    ]};
+								sendSC(DataMap);
+								
+	
+								
 							});
 							
 							
