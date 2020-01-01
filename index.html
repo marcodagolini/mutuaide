@@ -97,8 +97,15 @@
  	  
      
 
-     
-        <script>
+	   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	   
+	   <script>
+		   
+		   
+		   google.maps.event.addListener(map, "click", function (e) {
+			   //lat and lng is available in e object
+			   console.log(JSON.stringify(e));
+		   });
 		
 		
 		var myWidth;
