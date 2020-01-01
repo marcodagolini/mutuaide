@@ -126,14 +126,23 @@
 						// var myURL = "https://www.google.com/maps/embed/v1/place?key=" + myApiKey + "&q=" + lat + "," + long + "&zoom=15";
 						// document.getElementById('myIframe').src = myURL;
 						
-						lat = parseFloat(lat);
-						long = parseFloat(long);
+						myScript.onload = function(script){
+							lat = parseFloat(lat);
+							long = parseFloat(long);
+							
+							var map = new google.maps.Map(document.getElementById('map'), {
+								center: {lat: lat, lng: long},
+								zoom: 15,
+								mapTypeId: 'roadmap'
+							});
+							
+						}
+
 						
-						var map = new google.maps.Map(document.getElementById('map'), {
-							center: {lat: lat, lng: long},
-							zoom: 15,
-							mapTypeId: 'roadmap'
-						});
+						
+						
+						
+						
 
 						
 					}
